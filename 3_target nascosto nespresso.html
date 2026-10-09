@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Game Show - La Ghigliottina & Rai Pubblicità Data Strategy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Montserrat:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            user-select: none;
+            overflow-x: hidden;
+            background: #020617;
+        }
+
+        .font-teko {
+            font-family: 'Teko', sans-serif;
+        }
+
+        .font-mono-code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Studio Radial Atmosphere */
+        .tv-studio-bg {
+            background: radial-gradient(circle at 50% 18%, #0c337a 0%, #061e56 36%, #030d28 72%, #010410 100%);
+        }
+
+        .studio-light-cone {
+            position: absolute;
+            width: 340px;
+            height: 150%;
+            background: linear-gradient(180deg, rgba(96, 165, 250, 0.2) 0%, rgba(37, 99, 235, 0.04) 55%, transparent 100%);
+            transform-origin: top center;
+            filter: blur(55px);
+            pointer-events: none;
+        }
+
+        /* Broadcast slanted capsule shape */
+        .tv-box-shape {
+            position: relative;
+            transform: skewX(-10deg);
+            border-radius: 9999px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .tv-box-content {
+            transform: skewX(10deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Glossy Amaranto Buttons */
+        .tv-amaranto-btn {
+            background: linear-gradient(180deg, #b91c1c 0%, #991b1b 28%, #7f1d1d 68%, #450a0a 100%);
+            border: 2px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                inset 0 2px 4px rgba(255, 255, 255, 0.35),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.8),
+                0 6px 18px rgba(0, 0, 0, 0.65),
+                0 0 16px rgba(185, 28, 28, 0.4);
+            cursor: pointer;
+        }
+
+        .tv-amaranto-btn::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 12%;
+            width: 76%;
+            height: 26%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+            border-radius: 9999px;
+            pointer-events: none;
+            filter: blur(0.5px);
+        }
+
+        .tv-amaranto-btn:hover:not(:disabled) {
+            transform: skewX(-10deg) translateY(-2px);
+            filter: brightness(1.15);
+            box-shadow: 
+                inset 0 2px 5px rgba(255, 255, 255, 0.55),
+                0 10px 24px rgba(0, 0, 0, 0.75),
+                0 0 22px rgba(239, 68, 68, 0.6);
+        }
+
+        .tv-amaranto-btn:active:not(:disabled) {
+            transform: skewX(-10deg) translateY(2px);
+        }
+
+        /* Final Reveal Button */
+        .tv-reveal-btn {
+            background: linear-gradient(180deg, #fef08a 0%, #eab308 26%, #ca8a04 68%, #713f12 100%);
+            border: 2.5px solid #ffffff;
+            box-shadow: 
+                inset 0 2px 6px rgba(255, 255, 255, 0.9),
+                inset 0 -4px 8px rgba(0, 0, 0, 0.85),
+                0 8px 30px rgba(234, 179, 8, 0.65);
+            cursor: pointer;
+            animation: pulse-reveal-glow 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-reveal-glow {
+            0%, 100% { box-shadow: 0 0 24px rgba(234, 179, 8, 0.6), inset 0 2px 6px rgba(255, 255, 255, 0.9); transform: skewX(-10deg) scale(1); }
+            50% { box-shadow: 0 0 45px rgba(250, 204, 21, 0.95), inset 0 2px 6px rgba(255, 255, 255, 1); transform: skewX(-10deg) scale(1.02); }
+        }
+
+        /* Lower Target Slots: Hidden State */
+        .tv-slot-hidden {
+            background: linear-gradient(180deg, #091a3e 0%, #050f28 100%);
+            border: 1.5px dashed rgba(56, 189, 248, 0.25);
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+            opacity: 0.65;
+        }
+
+        .shimmer-placeholder {
+            height: 7px;
+            width: 32%;
+            border-radius: 9999px;
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.1) 0%, rgba(147, 197, 253, 0.45) 50%, rgba(56, 189, 248, 0.1) 100%);
+            background-size: 200% 100%;
+            animation: pulse-shimmer 2.2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-shimmer {
+            0% { background-position: -150% 0; }
+            100% { background-position: 150% 0; }
+        }
+
+        /* Lower Target Slots: Revealed Electric Blue */
+        .tv-slot-revealed-blue {
+            background: linear-gradient(180deg, #1d4ed8 0%, #2563eb 25%, #0284c7 75%, #0369a1 100%) !important;
+            border: 2.5px solid #e0f2fe !important;
+            box-shadow: 
+                0 0 28px rgba(14, 165, 233, 0.8),
+                inset 0 3px 6px rgba(255, 255, 255, 0.85),
+                inset 0 -3px 8px rgba(0, 0, 0, 0.6) !important;
+            opacity: 1 !important;
+            animation: pop-reveal 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .tv-slot-revealed-blue::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 8%;
+            width: 84%;
+            height: 40%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 9999px;
+            pointer-events: none;
+        }
+
+        @keyframes pop-reveal {
+            0% { transform: skewX(-10deg) scale(0.92); opacity: 0; }
+            60% { transform: skewX(-10deg) scale(1.03); }
+            100% { transform: skewX(-10deg) scale(1); opacity: 1; }
+        }
+
+        /* Gold Affinity Display */
+        .tv-gold-display {
+            background: linear-gradient(180deg, #fde047 0%, #eab308 25%, #ca8a04 65%, #854d0e 100%);
+            border: 3px solid #ffffff;
+            box-shadow: 
+                0 0 30px rgba(234, 179, 8, 0.5),
+                inset 0 3px 8px rgba(255, 255, 255, 0.9),
+                inset 0 -4px 10px rgba(0, 0, 0, 0.55);
+            border-radius: 9999px;
+            position: relative;
+        }
+
+        .tv-gold-display::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 6%;
+            width: 88%;
+            height: 38%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 9999px;
+            pointer-events: none;
+        }
+
+        .tv-gold-display.boosted {
+            animation: gold-pulse 0.7s ease-out;
+        }
+
+        @keyframes gold-pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); box-shadow: 0 0 45px rgba(250, 204, 21, 0.95); }
+            100% { transform: scale(1); }
+        }
+
+        /* Blue Audience Badge */
+        .tv-affinity-badge {
+            background: linear-gradient(135deg, #071330 0%, #0d2861 60%, #0369a1 100%);
+            border: 2px solid #38bdf8;
+            box-shadow: 0 0 22px rgba(56, 189, 248, 0.35);
+        }
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 8px;
+        }
+
+        @keyframes screen-shake {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-6px, 2px); }
+            50% { transform: translate(6px, -2px); }
+            75% { transform: translate(-4px, 1px); }
+        }
+
+        .shake-effect {
+            animation: screen-shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white flex flex-col justify-between tv-studio-bg relative overflow-x-hidden">
+
+    <!-- Studio Volumetric Lighting -->
+    <div class="studio-light-cone -rotate-45 -top-28 left-1/4"></div>
+    <div class="studio-light-cone rotate-45 -top-28 right-1/4"></div>
+
+    <!-- Flash Effect Layer -->
+    <div id="flash-effect" class="fixed inset-0 pointer-events-none z-50 transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Top Broadcast Header -->
+    <header class="relative z-20 w-full px-5 py-2.5 border-b border-blue-900/60 bg-slate-950/80 backdrop-blur-md flex items-center justify-between shadow-lg">
+        <div class="flex items-center space-x-3 md:space-x-4">
+            <span class="text-blue-500 font-bold text-lg md:text-xl tracking-tight select-none">
+                RaiPubblicità
+            </span>
+            <div class="flex items-baseline gap-1.5 md:gap-2">
+                <span class="text-xs md:text-sm font-bold tracking-widest uppercase text-blue-200 hidden sm:inline">
+                    La Ghigliottina
+                </span>
+                <span class="text-slate-500 font-bold hidden sm:inline">-</span>
+                <span class="text-amber-400 font-teko text-2xl md:text-4xl font-extrabold tracking-wider uppercase leading-none drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)]">
+                    IL TARGET NASCOSTO PER NESTLÈ
+                </span>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-3">
+            <button id="sound-toggle" class="text-xs bg-blue-950/90 hover:bg-blue-900 border border-blue-400/40 px-3 py-1.5 rounded-full flex items-center gap-1.5 transition cursor-pointer">
+                <span id="sound-icon">🔊</span>
+                <span id="sound-label">Audio On</span>
+            </button>
+            <button id="btn-quick-reset" class="text-xs bg-red-950/80 hover:bg-red-900 border border-red-500/40 px-3 py-1.5 rounded-full font-bold transition active:scale-95 text-red-200 cursor-pointer">
+                🔄 Ricomincia da capo
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Studio Arena -->
+    <main id="game-stage" class="relative z-10 flex-1 flex flex-col lg:flex-row items-start p-3 md:p-6 max-w-[1600px] mx-auto w-full gap-6">
+        
+        <!-- LEFT COLUMN: TV Stage Choices & Clues -->
+        <div class="w-full lg:w-6/12 flex flex-col justify-start min-h-[660px]">
+            
+            <!-- Choice & Final Action Row (Top Center, 500px Max) -->
+            <div class="w-full flex justify-center pt-2 pb-2">
+                
+                <!-- Pair Choice Buttons (Steps 1-5) -->
+                <div id="choices-container" class="w-full max-w-[500px] flex gap-4">
+                    <button id="choice-btn-left" class="tv-box-shape tv-amaranto-btn w-1/2 h-14 md:h-16 flex items-center justify-center">
+                        <span id="choice-text-left" class="tv-box-content font-black tracking-wider text-lg md:text-xl text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
+                            PREMIUM
+                        </span>
+                    </button>
+
+                    <button id="choice-btn-right" class="tv-box-shape tv-amaranto-btn w-1/2 h-14 md:h-16 flex items-center justify-center">
+                        <span id="choice-text-right" class="tv-box-content font-black tracking-wider text-lg md:text-xl text-white uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
+                            PROMO
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Final Svela Target Button (Appears ONLY after step 5 is complete) -->
+                <div id="final-reveal-container" class="w-full max-w-[500px] hidden">
+                    <button id="btn-reveal-target" class="tv-box-shape tv-reveal-btn w-full h-15 md:h-16 flex items-center justify-center">
+                        <span class="tv-box-content font-black tracking-widest text-lg md:text-2xl text-slate-950 uppercase drop-shadow">
+                            ⚡ SVELA IL TARGET NASCOSTO
+                        </span>
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Lower Clues and Metrics Container -->
+            <div class="w-full flex flex-col items-center justify-center pt-14 md:pt-24 space-y-5">
+                <div class="w-full flex flex-col items-center space-y-2.5">
+                    <div id="slot-0" class="tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center">
+                        <div id="slot-content-0" class="tv-box-content">
+                            <div class="shimmer-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <div id="slot-1" class="tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center">
+                        <div id="slot-content-1" class="tv-box-content">
+                            <div class="shimmer-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <div id="slot-2" class="tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center">
+                        <div id="slot-content-2" class="tv-box-content">
+                            <div class="shimmer-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <div id="slot-3" class="tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center">
+                        <div id="slot-content-3" class="tv-box-content">
+                            <div class="shimmer-placeholder"></div>
+                        </div>
+                    </div>
+
+                    <div id="slot-4" class="tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center">
+                        <div id="slot-content-4" class="tv-box-content">
+                            <div class="shimmer-placeholder"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Metric Bar -->
+                <div class="w-full max-w-[500px] mx-auto grid grid-cols-3 gap-3 items-center pt-2">
+                    <div id="affinity-badge" class="col-span-2 tv-gold-display py-3 px-4 shadow-2xl flex items-center justify-center">
+                        <div class="flex items-center justify-between w-full px-2">
+                            <span class="text-[11px] md:text-xs font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)] tracking-wider uppercase text-left leading-tight">
+                                AFFINITÀ TARGET<br>NASCOSTO
+                            </span>
+                            <span id="affinity-counter" class="text-3xl md:text-4xl font-black text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)] font-teko tracking-wider leading-none ml-2">
+                                1.0x
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-span-1 tv-affinity-badge rounded-full py-2.5 px-2 flex flex-col justify-center items-center text-center shadow-2xl">
+                        <span class="text-[8px] md:text-[9px] font-bold text-sky-300 uppercase tracking-widest leading-tight">
+                            AUDIENCE
+                        </span>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                            <span id="audience-counter" class="text-2xl md:text-3xl font-black text-sky-300 font-teko tracking-wider leading-none">
+                                20
+                            </span>
+                            <span id="audience-unit" class="text-[10px] md:text-xs font-bold text-sky-400 font-mono-code leading-none">
+                                MLN
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Anchored at top, minimal Data Strategy Cockpit -->
+        <div class="w-full lg:w-6/12 bg-slate-950/85 backdrop-blur-md border border-sky-500/30 p-4 md:p-5 rounded-3xl shadow-2xl flex flex-col justify-start self-start">
+            
+            <div class="pb-2.5 border-b border-sky-900/50 flex items-center justify-between">
+                <span class="text-xs md:text-sm font-black tracking-widest uppercase text-sky-400">
+                    DATA STRATEGY RAI PUBBLICITÀ
+                </span>
+            </div>
+
+            <!-- Pre-selection Placeholder -->
+            <div id="strategy-waiting" class="py-14 flex flex-col items-center justify-center text-center space-y-2">
+                <div class="w-10 h-10 rounded-full border-2 border-dashed border-sky-500/40 flex items-center justify-center text-sky-400 animate-spin">
+                    ⟳
+                </div>
+                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                    Seleziona una parola per attivare l'approccio Data Strategy
+                </span>
+            </div>
+
+            <!-- Post-selection Active Content -->
+            <div id="strategy-active-content" class="pt-3 space-y-3 hidden">
+                
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-sky-400 animate-ping"></span>
+                        <span id="strategy-attribute-title" class="text-lg md:text-xl font-black uppercase text-white tracking-wide">
+                            PREMIUM
+                        </span>
+                        <span id="progress-step-text" class="text-[10px] text-sky-300 font-bold bg-sky-950 border border-sky-400/30 px-2 py-0.5 rounded-full">
+                            Step 1 di 5
+                        </span>
+                    </div>
+
+                    <div id="view-mode-toggle" class="hidden items-center bg-slate-900 border border-sky-900/60 p-0.5 rounded-xl">
+                        <button id="btn-mode-kpi" class="text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-950 bg-amber-400 font-black shadow cursor-pointer">
+                            ⚡ Single View KPI
+                        </button>
+                        <button id="btn-mode-table" class="text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-400 hover:text-white cursor-pointer">
+                            📋 Dettaglio Completo
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-blue-950/40 border border-sky-400/30 rounded-2xl p-3">
+                    <p id="strategy-note-text" class="text-xs text-slate-200 leading-relaxed font-medium"></p>
+                </div>
+
+                <!-- Dynamic Data Visualization Container -->
+                <div id="strategy-visual-container" class="space-y-2"></div>
+
+                <!-- Cumulative Activated Attributes List -->
+                <div class="pt-1 flex items-center justify-between text-[11px] text-slate-400 border-t border-slate-900">
+                    <span>Target finale: <strong class="text-sky-300 font-bold">3.0 Mio profili</strong></span>
+                    <div id="strategy-history-tags" class="flex flex-wrap gap-1"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Final Summary Modal -->
+    <div id="summary-modal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4 z-50 hidden transition-all duration-300 overflow-y-auto">
+        <div class="bg-[#022839] border border-cyan-500/40 rounded-3xl max-w-6xl w-full shadow-[0_0_80px_rgba(2,132,199,0.35)] my-auto overflow-hidden text-slate-100 flex flex-col">
+            
+            <div class="bg-[#011c29] px-4 md:px-6 py-2.5 border-b border-cyan-900/60 flex items-center justify-between flex-wrap gap-3">
+                <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-cyan-400 animate-ping"></span>
+                    <span class="text-xs font-black tracking-widest text-cyan-300 uppercase">TARGET NASCOSTO SVELATO</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-baseline gap-1.5 bg-[#03364d] border border-amber-400/40 px-3 py-1 rounded-xl">
+                        <span class="text-[10px] text-amber-200 uppercase font-bold">Audience:</span>
+                        <span class="text-lg md:text-xl font-black text-amber-400 font-teko tracking-wider leading-none">3.0 MLN</span>
+                    </div>
+                    <div class="flex items-baseline gap-1.5 bg-[#03364d] border border-cyan-400/40 px-3 py-1 rounded-xl">
+                        <span class="text-[10px] text-cyan-200 uppercase font-bold">Affinità:</span>
+                        <span class="text-lg md:text-xl font-black text-cyan-300 font-teko tracking-wider leading-none">4.8x</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12">
+                
+                <div class="lg:col-span-8 p-4 md:p-6 space-y-5 bg-[#022839] border-b lg:border-b-0 lg:border-r border-cyan-900/60">
+                    
+                    <div class="flex items-start justify-between border-b border-cyan-900/50 pb-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="bg-cyan-600 text-white font-black text-xs px-2 py-0.5 rounded tracking-wider">Rai</span>
+                                <span class="text-cyan-400 font-extrabold text-sm tracking-widest">Pubblicità</span>
+                            </div>
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white uppercase mt-1 drop-shadow-[0_2px_12px_rgba(34,211,238,0.3)]">
+                                TARGET NESPRESSO
+                            </h1>
+                            <p class="text-xs md:text-sm text-cyan-200/90 font-medium">
+                                socio - demo | attitudini | interessi | contenuti
+                            </p>
+                        </div>
+
+                        <div class="text-right flex items-center gap-2 bg-[#011c29]/70 border border-cyan-500/30 px-3 py-2 rounded-2xl">
+                            <svg class="w-8 h-8 text-cyan-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                            </svg>
+                            <div>
+                                <span class="text-[10px] text-cyan-300 font-bold uppercase block tracking-wider leading-none">Audience</span>
+                                <span class="text-2xl md:text-3xl font-black text-cyan-400 font-teko tracking-wide leading-none">3.0 M</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                        
+                        <div class="md:col-span-5 bg-[#011c29]/90 border border-cyan-800/60 rounded-2xl p-3 flex flex-col justify-between space-y-3">
+                            <div>
+                                <div class="w-full h-36 rounded-xl overflow-hidden relative border border-cyan-500/20 bg-gradient-to-tr from-slate-900 via-cyan-950 to-slate-900 flex items-center justify-center">
+                                    <div class="absolute inset-0 bg-cover bg-center opacity-85" style="background-image: url('https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80');"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-[#011c29] via-transparent to-transparent"></div>
+                                    <span class="absolute bottom-2 left-2 text-[10px] font-mono text-cyan-300 bg-black/60 px-1.5 py-0.5 rounded border border-cyan-500/30">
+                                        Metropolitan Connoisseurs
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-2 mt-2.5">
+                                    <div class="w-7 h-7 rounded-full bg-cyan-600/40 border border-cyan-400 flex items-center justify-center text-xs">
+                                        👥
+                                    </div>
+                                    <div>
+                                        <h2 class="text-xs font-black uppercase text-white tracking-wide">Marco e Giulia</h2>
+                                        <p class="text-[10px] text-cyan-300 font-medium">Cultori dell'eleganza & rituali del caffè</p>
+                                    </div>
+                                </div>
+
+                                <ul class="text-[11px] text-slate-200 space-y-1.5 mt-2.5">
+                                    <li class="flex items-start gap-1.5 leading-snug">
+                                        <span class="text-cyan-400 font-black">✓</span>
+                                        <span>Amanti del caffè d'autore, design d'arredo e rituale quotidiano premium</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5 leading-snug">
+                                        <span class="text-cyan-400 font-black">✓</span>
+                                        <span>Elevata sensibilità estetica, packaging circolare (alluminio 100% riciclabile)</span>
+                                    </li>
+                                    <li class="flex items-start gap-1.5 leading-snug">
+                                        <span class="text-cyan-400 font-black">✓</span>
+                                        <span>Stile di vita metropolitano (urban mood), smart living ed esperienze gourmet</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="pt-2 border-t border-cyan-900/60 flex items-center gap-2">
+                                <div class="w-5 h-5 rounded-full bg-amber-400/20 border border-amber-400 flex items-center justify-center text-[10px] text-amber-300">
+                                    ♥
+                                </div>
+                                <div class="text-[10px] leading-tight">
+                                    <span class="font-black text-amber-300 uppercase block">CORE NEED</span>
+                                    <span class="text-slate-300">Qualità senza compromessi, design e sostenibilità</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-7 bg-[#011c29]/70 border border-cyan-800/60 rounded-2xl p-3 flex flex-col justify-between space-y-3">
+                            <span class="text-xs font-black uppercase tracking-wider text-cyan-300 border-b border-cyan-900/60 pb-1.5 flex items-center justify-between">
+                                <span>1 PARTY DATA – DEMO & INTERESTS</span>
+                                <span class="text-[9px] text-slate-400 font-mono">DMP Rai</span>
+                            </span>
+
+                            <div class="grid grid-cols-12 gap-2 items-center">
+                                <div class="col-span-5 flex flex-col items-center justify-center">
+                                    <div class="relative w-20 h-20">
+                                        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                            <circle cx="18" cy="18" r="14" fill="none" stroke="#0ea5e9" stroke-width="5" stroke-dasharray="46 100"></circle>
+                                            <circle cx="18" cy="18" r="14" fill="none" stroke="#ec4899" stroke-width="5" stroke-dasharray="54 100" stroke-dashoffset="-46"></circle>
+                                        </svg>
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center text-[9px] font-black text-white leading-none">
+                                            <span>46% ♂</span>
+                                            <span class="text-pink-400 mt-0.5">54% ♀</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[9px] text-slate-400 uppercase font-bold mt-1">Uomo / Donna</span>
+                                </div>
+
+                                <div class="col-span-7 space-y-1">
+                                    <div class="flex items-end justify-between gap-1 h-16 pt-2 px-1">
+                                        <div class="flex-1 flex flex-col items-center h-full justify-end">
+                                            <span class="text-[8px] font-mono text-cyan-300 mb-0.5">8%</span>
+                                            <div class="w-full bg-cyan-700/60 rounded-t h-[20%]"></div>
+                                            <span class="text-[8px] text-slate-400 mt-1">18-24</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center h-full justify-end">
+                                            <span class="text-[8px] font-mono text-cyan-300 mb-0.5">22%</span>
+                                            <div class="w-full bg-cyan-500 rounded-t h-[55%]"></div>
+                                            <span class="text-[8px] text-slate-400 mt-1">25-34</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center h-full justify-end">
+                                            <span class="text-[8px] font-mono text-cyan-300 font-bold mb-0.5">28%</span>
+                                            <div class="w-full bg-cyan-400 rounded-t h-[75%] shadow-[0_0_8px_rgba(34,211,238,0.5)]"></div>
+                                            <span class="text-[8px] text-white font-bold mt-1">35-44</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center h-full justify-end">
+                                            <span class="text-[8px] font-mono text-cyan-300 font-bold mb-0.5">24%</span>
+                                            <div class="w-full bg-cyan-500 rounded-t h-[65%]"></div>
+                                            <span class="text-[8px] text-slate-400 mt-1">45-54</span>
+                                        </div>
+                                        <div class="flex-1 flex flex-col items-center h-full justify-end">
+                                            <span class="text-[8px] font-mono text-cyan-300 mb-0.5">18%</span>
+                                            <div class="w-full bg-cyan-700/60 rounded-t h-[45%]"></div>
+                                            <span class="text-[8px] text-slate-400 mt-1">55+</span>
+                                        </div>
+                                    </div>
+                                    <span class="text-[8px] text-slate-400 block text-center uppercase tracking-wide">Core Age: 25-54 anni (74%)</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-4 gap-1.5 pt-2 border-t border-cyan-900/60 text-center">
+                                <div class="bg-[#022839] border border-cyan-800/80 rounded-xl p-1.5">
+                                    <span class="text-base block">🍳</span>
+                                    <span class="text-[9px] font-bold text-slate-200 block truncate">Cooking</span>
+                                </div>
+                                <div class="bg-[#022839] border border-cyan-800/80 rounded-xl p-1.5">
+                                    <span class="text-base block">🏺</span>
+                                    <span class="text-[9px] font-bold text-slate-200 block truncate">Design</span>
+                                </div>
+                                <div class="bg-[#022839] border border-cyan-800/80 rounded-xl p-1.5">
+                                    <span class="text-base block">🌱</span>
+                                    <span class="text-[9px] font-bold text-slate-200 block truncate">Eco Green</span>
+                                </div>
+                                <div class="bg-[#022839] border border-cyan-800/80 rounded-xl p-1.5">
+                                    <span class="text-base block">🏙️</span>
+                                    <span class="text-[9px] font-bold text-slate-200 block truncate">Metropoli</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="bg-[#011c29]/70 border border-cyan-800/60 rounded-2xl p-3 space-y-2.5">
+                        <span class="text-xs font-black uppercase tracking-wider text-cyan-300 border-b border-cyan-900/60 pb-1.5 flex items-center justify-between">
+                            <span>1 PARTY DATA – CONTENT linear TV & RaiPlay</span>
+                            <span class="text-[9px] text-slate-400">Generi ad altissima affinità</span>
+                        </span>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                            <div class="bg-gradient-to-b from-red-950/80 to-slate-950 border border-red-500/40 rounded-xl p-2 text-center flex flex-col justify-between h-20 shadow">
+                                <span class="text-[9px] font-mono text-red-300 font-bold">TALK & TREND</span>
+                                <span class="font-black text-xs text-white uppercase tracking-wider">BELVE</span>
+                                <span class="text-[8px] text-slate-400">Affinità 3.4x</span>
+                            </div>
+                            <div class="bg-gradient-to-b from-emerald-950/80 to-slate-950 border border-emerald-500/40 rounded-xl p-2 text-center flex flex-col justify-between h-20 shadow">
+                                <span class="text-[9px] font-mono text-emerald-300 font-bold">TERRITORIO</span>
+                                <span class="font-black text-xs text-white uppercase tracking-wider">LINEA VERDE</span>
+                                <span class="text-[8px] text-slate-400">Affinità 2.8x</span>
+                            </div>
+                            <div class="bg-gradient-to-b from-rose-950/80 to-slate-950 border border-rose-500/40 rounded-xl p-2 text-center flex flex-col justify-between h-20 shadow">
+                                <span class="text-[9px] font-mono text-rose-300 font-bold">SOCIETÀ</span>
+                                <span class="font-black text-xs text-white uppercase tracking-wider">COSTUME</span>
+                                <span class="text-[8px] text-slate-400">Affinità 2.9x</span>
+                            </div>
+                            <div class="bg-gradient-to-b from-blue-950/80 to-slate-950 border border-blue-500/40 rounded-xl p-2 text-center flex flex-col justify-between h-20 shadow">
+                                <span class="text-[9px] font-mono text-blue-300 font-bold">SHOW COOKING</span>
+                                <span class="font-black text-xs text-white uppercase tracking-wider">CUCINA RAI</span>
+                                <span class="text-[8px] text-slate-400">Affinità 7.42x</span>
+                            </div>
+                            <div class="bg-gradient-to-b from-amber-950/80 to-slate-950 border border-amber-500/40 rounded-xl p-2 text-center flex flex-col justify-between h-20 shadow col-span-2 sm:col-span-1">
+                                <span class="text-[9px] font-mono text-amber-300 font-bold">EDU & ARTE</span>
+                                <span class="font-black text-xs text-white uppercase tracking-wider">DOCU DESIGN</span>
+                                <span class="text-[8px] text-slate-400">Affinità 5.65x</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="lg:col-span-4 p-4 md:p-6 bg-[#001c29] space-y-4 flex flex-col justify-between">
+                    
+                    <div class="space-y-4">
+                        <span class="text-xs font-black uppercase tracking-widest text-cyan-300 border-b border-cyan-900/60 pb-2 block">
+                            DATA & SIGNALS
+                        </span>
+
+                        <!-- 3P DATA & INTENT TO BUY -->
+                        <div class="bg-[#022839]/60 border border-amber-500/30 rounded-2xl p-3 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-black text-xs flex items-center justify-center shadow">
+                                    💾
+                                </div>
+                                <span class="text-xs font-black text-amber-400 uppercase tracking-wide">
+                                    3P DATA & INTENT TO BUY
+                                </span>
+                            </div>
+                            <ul class="text-[11px] text-slate-300 space-y-1 pl-2">
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-amber-400">○</span>
+                                    <span>High-income ZIP codes & Grandi Aree Urbane (92%)</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-amber-400">○</span>
+                                    <span>Espresso Lovers & Boutique Coffee experience</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-amber-400">○</span>
+                                    <span>App specialistiche Finanza, Architettura & Arredo</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-amber-400">○</span>
+                                    <span>Acquisti online, e-commerce & abbonamenti premium</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- RETAIL DATA -->
+                        <div class="bg-[#022839]/60 border border-fuchsia-500/30 rounded-2xl p-3 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-fuchsia-500 text-white font-black text-xs flex items-center justify-center shadow">
+                                    🛒
+                                </div>
+                                <span class="text-xs font-black text-fuchsia-400 uppercase tracking-wide">
+                                    RETAIL DATA
+                                </span>
+                            </div>
+                            <ul class="text-[11px] text-slate-300 space-y-1 pl-2">
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-fuchsia-400">○</span>
+                                    <span>Scontrino medio elevato e spesa bio/gourmet certificata</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-fuchsia-400">○</span>
+                                    <span>Acquisto capsule originali, monorigine ed eccellenze</span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-fuchsia-400">○</span>
+                                    <span>Forte fedeltà e frequenza ai programmi loyalty premium</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- RESEARCH & GFK -->
+                        <div class="bg-[#022839]/60 border border-emerald-500/30 rounded-2xl p-3 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 font-black text-xs flex items-center justify-center shadow">
+                                    🔍
+                                </div>
+                                <span class="text-xs font-black text-emerald-400 uppercase tracking-wide">
+                                    RESEARCH (GFK PANEL)
+                                </span>
+                            </div>
+                            <ul class="text-[11px] text-slate-300 space-y-1 pl-2">
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-emerald-400">○</span>
+                                    <span><strong>Qualità come driver d'acquisto</strong></span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-emerald-400">○</span>
+                                    <span><strong>Scelta guidata dall'estetica e design</strong></span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-emerald-400">○</span>
+                                    <span><strong>Alluminio riciclabile & Sostenibilità</strong></span>
+                                </li>
+                                <li class="flex items-start gap-1.5">
+                                    <span class="text-emerald-400">○</span>
+                                    <span>Propensione a frequentare boutique monomarca</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="pt-3 border-t border-cyan-900/50 flex flex-col items-center gap-2">
+                        <span class="text-[9px] text-slate-400 font-mono text-center">
+                            fonte: DMP Rai Pubblicità • GfK • Retail Scanner
+                        </span>
+                        <button id="btn-modal-restart" class="text-xs text-slate-400 hover:text-amber-300 underline underline-offset-4 transition cursor-pointer font-medium hover:scale-105 active:scale-95 inline-flex items-center gap-1.5 py-1 px-3">
+                            🔄 ricomincia da capo
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        class BroadcastAudio {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+            }
+
+            init() {
+                try {
+                    if (!this.ctx) {
+                        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                        if (AudioContextClass) {
+                            this.ctx = new AudioContextClass();
+                        }
+                    }
+                    if (this.ctx && this.ctx.state === 'suspended') {
+                        this.ctx.resume().catch(() => {});
+                    }
+                } catch (e) {
+                    console.warn("Audio init warning:", e);
+                }
+            }
+
+            toggle() {
+                this.enabled = !this.enabled;
+                return this.enabled;
+            }
+
+            playBladeDrop() {
+                if (!this.enabled) return;
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime;
+
+                    const swooshLen = 0.28;
+                    const bufferSize = Math.floor(this.ctx.sampleRate * swooshLen);
+                    const noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+                    const output = noiseBuffer.getChannelData(0);
+                    for (let i = 0; i < bufferSize; i++) {
+                        output[i] = (Math.random() * 2 - 1) * Math.pow(i / bufferSize, 1.8);
+                    }
+
+                    const noiseNode = this.ctx.createBufferSource();
+                    noiseNode.buffer = noiseBuffer;
+
+                    const bandpass = this.ctx.createBiquadFilter();
+                    bandpass.type = 'bandpass';
+                    bandpass.frequency.setValueAtTime(3200, now);
+                    bandpass.frequency.exponentialRampToValueAtTime(380, now + swooshLen);
+                    bandpass.Q.setValueAtTime(4.0, now);
+
+                    const noiseGain = this.ctx.createGain();
+                    noiseGain.gain.setValueAtTime(0.01, now);
+                    noiseGain.gain.linearRampToValueAtTime(0.65, now + 0.22);
+                    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + swooshLen);
+
+                    noiseNode.connect(bandpass);
+                    bandpass.connect(noiseGain);
+                    noiseGain.connect(this.ctx.destination);
+                    noiseNode.start(now);
+
+                    const glideOsc = this.ctx.createOscillator();
+                    const glideGain = this.ctx.createGain();
+                    glideOsc.type = 'sawtooth';
+                    glideOsc.frequency.setValueAtTime(1950, now);
+                    glideOsc.frequency.exponentialRampToValueAtTime(220, now + 0.25);
+
+                    glideGain.gain.setValueAtTime(0.05, now);
+                    glideGain.gain.linearRampToValueAtTime(0.28, now + 0.2);
+                    glideGain.gain.exponentialRampToValueAtTime(0.001, now + 0.26);
+
+                    glideOsc.connect(glideGain);
+                    glideGain.connect(this.ctx.destination);
+                    glideOsc.start(now);
+                    glideOsc.stop(now + 0.27);
+
+                    const impactTime = now + 0.24;
+                    const bassHit = this.ctx.createOscillator();
+                    const bassGain = this.ctx.createGain();
+                    bassHit.type = 'sine';
+                    bassHit.frequency.setValueAtTime(140, impactTime);
+                    bassHit.frequency.exponentialRampToValueAtTime(28, impactTime + 0.32);
+
+                    bassGain.gain.setValueAtTime(0.85, impactTime);
+                    bassGain.gain.exponentialRampToValueAtTime(0.0001, impactTime + 0.34);
+
+                    bassHit.connect(bassGain);
+                    bassGain.connect(this.ctx.destination);
+                    bassHit.start(impactTime);
+                    bassHit.stop(impactTime + 0.36);
+
+                    const harmonics = [587, 880, 1318, 2093];
+                    harmonics.forEach((freq, idx) => {
+                        const metOsc = this.ctx.createOscillator();
+                        const metGain = this.ctx.createGain();
+                        metOsc.type = idx % 2 === 0 ? 'triangle' : 'square';
+                        metOsc.frequency.setValueAtTime(freq, impactTime);
+                        metOsc.frequency.exponentialRampToValueAtTime(freq * 0.6, impactTime + 0.25);
+
+                        const initialVol = 0.35 / (idx + 1);
+                        metGain.gain.setValueAtTime(initialVol, impactTime);
+                        metGain.gain.exponentialRampToValueAtTime(0.0001, impactTime + 0.28 + idx * 0.05);
+
+                        metOsc.connect(metGain);
+                        metGain.connect(this.ctx.destination);
+                        metOsc.start(impactTime);
+                        metOsc.stop(impactTime + 0.35);
+                    });
+                } catch (e) {
+                    console.warn("Blade drop sound warning:", e);
+                }
+            }
+
+            playCorrect() {
+                this.playBladeDrop();
+                if (!this.enabled) return;
+                try {
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime + 0.28;
+                    const notes = [523.25, 659.25, 783.99, 1046.50];
+                    notes.forEach((freq, idx) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.04);
+
+                        gain.gain.setValueAtTime(0, now + idx * 0.04);
+                        gain.gain.linearRampToValueAtTime(0.24, now + idx * 0.04 + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.04 + 0.5);
+
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(now + idx * 0.04);
+                        osc.stop(now + idx * 0.04 + 0.55);
+                    });
+                } catch (e) {
+                    console.warn("Play correct sound warning:", e);
+                }
+            }
+
+            playWrong() {
+                this.playBladeDrop();
+                if (!this.enabled) return;
+                try {
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime + 0.28;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(130, now);
+                    osc.frequency.exponentialRampToValueAtTime(45, now + 0.42);
+
+                    gain.gain.setValueAtTime(0.38, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.48);
+                } catch (e) {
+                    console.warn("Play wrong sound warning:", e);
+                }
+            }
+
+            playRestart() {
+                if (!this.enabled) return;
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime;
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.exponentialRampToValueAtTime(750, now + 0.2);
+
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+
+                    osc.connect(gain);
+                    gain.connect(this.ctx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } catch (e) {
+                    console.warn("Play restart sound warning:", e);
+                }
+            }
+
+            playVictory() {
+                if (!this.enabled) return;
+                try {
+                    this.init();
+                    if (!this.ctx) return;
+                    const now = this.ctx.currentTime;
+                    const notes = [440, 554.37, 659.25, 880, 1108.73];
+                    notes.forEach((freq, idx) => {
+                        const osc = this.ctx.createOscillator();
+                        const gain = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+
+                        gain.gain.setValueAtTime(0, now + idx * 0.08);
+                        gain.gain.linearRampToValueAtTime(0.2, now + idx * 0.08 + 0.02);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.08 + 0.8);
+
+                        osc.connect(gain);
+                        gain.connect(this.ctx.destination);
+                        osc.start(now + idx * 0.08);
+                        osc.stop(now + idx * 0.08 + 0.85);
+                    });
+                } catch (e) {
+                    console.warn("Play victory sound warning:", e);
+                }
+            }
+        }
+
+        const sound = new BroadcastAudio();
+
+        const PREMIUM_DATA = {
+            gfk: {
+                title: "GFK Brand",
+                icon: "💎",
+                items: [
+                    { label: "Qualità come driver d'acquisto", affinita: 2.15, dist: 22.0 },
+                    { label: "Prodotti di marca", affinita: 1.79, dist: 18.0 },
+                    { label: "Scelta per design", affinita: 1.58, dist: 16.0 },
+                    { label: "Negozi luxury", affinita: 1.36, dist: 14.0 },
+                    { label: "Consumi status", affinita: 1.26, dist: 13.0 },
+                    { label: "Casa curata", affinita: 1.10, dist: 11.0 },
+                    { label: "Prodotti innovativi", affinita: 1.10, dist: 11.0 },
+                    { label: "Extra budget", affinita: 1.06, dist: 11.0 }
+                ]
+            },
+            profili: {
+                title: "Profili Digitali",
+                icon: "👤",
+                items: [
+                    { label: "Financial Expert", affinita: 3.58, dist: 17.43 },
+                    { label: "Home Decor", affinita: 3.46, dist: 20.54 },
+                    { label: "Benessere Mentale/Fisico", affinita: 3.44, dist: 19.64 },
+                    { label: "Autorevole", affinita: 3.43, dist: 54.99 },
+                    { label: "Global Mindset", affinita: 2.83, dist: 26.28 },
+                    { label: "Sostenibilità", affinita: 2.51, dist: 54.89 }
+                ]
+            },
+            generi: {
+                title: "Generi Rai",
+                icon: "📺",
+                items: [
+                    { label: "Storia & Arte (Edu)", affinita: 3.48, dist: 1.95 },
+                    { label: "Teatro / Danza / Musical", affinita: 3.10, dist: 10.12 },
+                    { label: "Cucina", affinita: 2.74, dist: 6.32 },
+                    { label: "Economia & Politica", affinita: 2.45, dist: 3.11 },
+                    { label: "Viaggi & Avventura", affinita: 2.16, dist: 29.50 },
+                    { label: "Scienza & Natura", affinita: 1.99, dist: 29.81 },
+                    { label: "Uomini Società", affinita: 1.79, dist: 3.25 }
+                ]
+            },
+            retail: {
+                title: "Retail & Loyalty",
+                icon: "🛒",
+                items: [
+                    { label: "Ecofriendly", affinita: 1.17, dist: 15.20 },
+                    { label: "Vino", affinita: 1.13, dist: 25.37 },
+                    { label: "Bio", affinita: 1.11, dist: 35.76 },
+                    { label: "Luxury", affinita: 1.10, dist: 31.09 },
+                    { label: "Pesce", affinita: 1.09, dist: 15.12 },
+                    { label: "Yogurt", affinita: 1.08, dist: 44.38 },
+                    { label: "Cura Persona", affinita: 1.08, dist: 44.77 },
+                    { label: "Alto Spendenti", affinita: 1.07, dist: 30.53 }
+                ]
+            }
+        };
+
+        const DESIGN_DATA = {
+            gfk: {
+                title: "GFK Stile & Qualità",
+                icon: "💎",
+                items: [
+                    { label: "Eleganza", affinita: 2.10, dist: 51.00 },
+                    { label: "Originale", affinita: 2.00, dist: 44.00 },
+                    { label: "Cura dello stile", affinita: 1.80, dist: 35.00 },
+                    { label: "L'estetica", affinita: 1.70, dist: 78.00 },
+                    { label: "Cambiare e osare", affinita: 1.60, dist: 14.00 },
+                    { label: "Qualità design", affinita: 1.50, dist: 41.00 }
+                ]
+            },
+            profili: {
+                title: "Profili Comportamentali",
+                icon: "👤",
+                items: [
+                    { label: "Altospendente", affinita: 8.20, dist: 52.45 },
+                    { label: "Global", affinita: 5.63, dist: 52.30 },
+                    { label: "Inclusione", affinita: 5.32, dist: 8.74 },
+                    { label: "Innovativo", affinita: 4.69, dist: 36.14 },
+                    { label: "Beauty Lover", affinita: 4.17, dist: 35.74 },
+                    { label: "Luxury Young", affinita: 4.03, dist: 12.58 }
+                ]
+            },
+            generi: {
+                title: "Generi Editoriali Rai",
+                icon: "📺",
+                items: [
+                    { label: "Cucina", affinita: 7.42, dist: 17.15 },
+                    { label: "Storia & Arte (Edu)", affinita: 5.65, dist: 3.17 },
+                    { label: "Sentimentale", affinita: 3.94, dist: 11.91 },
+                    { label: "News & Attualità", affinita: 3.40, dist: 15.51 },
+                    { label: "Lifestyle", affinita: 3.37, dist: 6.60 },
+                    { label: "Giochi & Quiz", affinita: 3.36, dist: 5.76 }
+                ]
+            },
+            retail: {
+                title: "Retail & Spesa",
+                icon: "🛒",
+                items: [
+                    { label: "Frequenti", affinita: 1.07, dist: 13.11 },
+                    { label: "Bio", affinita: 1.06, dist: 34.20 },
+                    { label: "Pet Lover", affinita: 1.05, dist: 17.62 },
+                    { label: "Prima Colazione", affinita: 1.05, dist: 69.08 },
+                    { label: "Surgelati", affinita: 1.04, dist: 50.11 },
+                    { label: "Luxury", affinita: 1.03, dist: 29.20 },
+                    { label: "Single", affinita: 1.03, dist: 51.85 }
+                ]
+            }
+        };
+
+        const ALLUMINIO_DATA = {
+            gfk: {
+                title: "GFK",
+                icon: "🌱",
+                items: [
+                    { label: "Sostenibile", affinita: 5.00, dist: 95.00 },
+                    { label: "Cerco riciclo", affinita: 2.30, dist: 22.00 },
+                    { label: "Zero waste", affinita: 2.30, dist: 19.00 },
+                    { label: "Scelta ambiente", affinita: 2.00, dist: 22.00 },
+                    { label: "Spesa sostenibile", affinita: 1.80, dist: 25.00 }
+                ]
+            },
+            profili: {
+                title: "Profili",
+                icon: "👤",
+                items: [
+                    { label: "Sostenibilità", affinita: 4.57, dist: 75.00 },
+                    { label: "Cat Lover", affinita: 4.56, dist: 66.11 },
+                    { label: "Pet Lover", affinita: 3.84, dist: 72.62 },
+                    { label: "Inclusione", affinita: 3.55, dist: 5.83 },
+                    { label: "Innovativo", affinita: 3.10, dist: 23.88 },
+                    { label: "Divertente", affinita: 2.91, dist: 21.51 }
+                ]
+            },
+            generi: {
+                title: "Generi RaiPlay & Edu",
+                icon: "📺",
+                items: [
+                    { label: "Documentari", affinita: 2.91, dist: 43.57 },
+                    { label: "Viaggi & Avventura", affinita: 2.77, dist: 24.15 },
+                    { label: "Uomini Società", affinita: 2.91, dist: 5.28 },
+                    { label: "Lifestyle", affinita: 2.85, dist: 5.57 },
+                    { label: "Contenuti Educational", affinita: 2.74, dist: 1.54 },
+                    { label: "Musica", affinita: 1.37, dist: 18.09 }
+                ]
+            },
+            retail: {
+                title: "Retail & Prodotti Eco",
+                icon: "🛒",
+                items: [
+                    { label: "Aria Aperta", affinita: 2.34, dist: 34.82 },
+                    { label: "Cura Corpo", affinita: 1.64, dist: 20.01 },
+                    { label: "Pet Lover", affinita: 1.37, dist: 23.04 },
+                    { label: "Sportivi", affinita: 1.37, dist: 31.26 },
+                    { label: "Bio", affinita: 1.29, dist: 41.74 },
+                    { label: "Yogurt", affinita: 1.27, dist: 51.85 },
+                    { label: "Verdura", affinita: 1.25, dist: 51.76 }
+                ]
+            }
+        };
+
+        const STEPS = [
+            {
+                id: 1,
+                leftWord: "PREMIUM",
+                rightWord: "PROMO",
+                correct: "PREMIUM",
+                targetAudience: 14.0,
+                targetAffinity: "1.6x",
+                note: "Dalla nostra data platform è possibile attingere all'audience affluent mixando i segnali da panel research GfK, dati open (aree ad alto reddito), dati di app e siti visitati (es. investimenti e luxury), dati da spesa online e tessere fedeltà.",
+                dataset: PREMIUM_DATA
+            },
+            {
+                id: 2,
+                leftWord: "PRATICITÀ",
+                rightWord: "DESIGN",
+                correct: "DESIGN",
+                targetAudience: 9.5,
+                targetAffinity: "2.4x",
+                note: "Target Altospendente e Global affascinato dall'estetica e dall'eleganza; altissima affinità su Cucina (7.42x) e contenuti Arte & Educational su RaiPlay, con forte propensione a scontrini retail di qualità e bio.",
+                dataset: DESIGN_DATA
+            },
+            {
+                id: 3,
+                leftWord: "URBAN MOOD",
+                rightWord: "PROVINCIA",
+                correct: "URBAN MOOD",
+                targetAudience: 6.2,
+                targetAffinity: "3.2x",
+                note: "Geotargeting micro-areale su grandi agglomerati urbani, mobilità attiva e consumo media in mobilità da app Rai.",
+                histogram: [
+                    { label: "Geotargeting Metropoli & Hub Urbani", pct: 92, color: "from-blue-500 to-sky-400" },
+                    { label: "Consumo App RaiPlay in Mobilità", pct: 74, color: "from-sky-500 to-teal-400" },
+                    { label: "Attitudine Smart Mobility & Servizi Digitali", pct: 81, color: "from-indigo-500 to-blue-400" },
+                    { label: "Fasce Orarie Commuter & Fast Living", pct: 68, color: "from-cyan-500 to-sky-300" }
+                ]
+            },
+            {
+                id: 4,
+                leftWord: "PLASTICA",
+                rightWord: "ALLUMINIO",
+                correct: "ALLUMINIO",
+                targetAudience: 4.5,
+                targetAffinity: "4.0x",
+                note: "Massima propensione alla sostenibilità (GfK affinità 5.0, 95% del target), packaging riciclabile in alluminio, cluster green su RaiPlay (Doc & Viaggi) e spesa orientata al benessere eco.",
+                dataset: ALLUMINIO_DATA
+            },
+            {
+                id: 5,
+                leftWord: "FOOD LOVER",
+                rightWord: "ESSENZIALE",
+                correct: "FOOD LOVER",
+                targetAudience: 3.0,
+                targetAffinity: "4.8x",
+                note: "Visualizzazioni di contenuti cooking su RaiPlay, food trend e spesa gourmet tracciata da panel e carte fedeltà partner.",
+                histogram: [
+                    { label: "Consumo Cooking Show & Docu-Food RaiPlay", pct: 90, color: "from-blue-500 to-sky-400" },
+                    { label: "Spesa Gourmet & Supermercati Premium", pct: 84, color: "from-sky-500 to-teal-400" },
+                    { label: "App Delivery, Ricettari & Ristorazione", pct: 79, color: "from-indigo-500 to-blue-400" },
+                    { label: "Affinità Vini Pregiati & Tipicità DOP/IGP", pct: 82, color: "from-cyan-500 to-sky-300" }
+                ]
+            }
+        ];
+
+        let currentStepIndex = 0;
+        let isProcessing = false;
+        let currentAudienceNumber = 20.0;
+        let revealedWords = [];
+        let viewMode = 'kpi';
+        let currentTabularCategory = 'tutte';
+
+        const choicesContainer = document.getElementById('choices-container');
+        const finalRevealContainer = document.getElementById('final-reveal-container');
+        const btnRevealTarget = document.getElementById('btn-reveal-target');
+        const btnLeft = document.getElementById('choice-btn-left');
+        const btnRight = document.getElementById('choice-btn-right');
+        const textLeft = document.getElementById('choice-text-left');
+        const textRight = document.getElementById('choice-text-right');
+        const audienceCounter = document.getElementById('audience-counter');
+        const affinityBadge = document.getElementById('affinity-badge');
+        const affinityCounter = document.getElementById('affinity-counter');
+        const flashEffect = document.getElementById('flash-effect');
+        const gameStage = document.getElementById('game-stage');
+        const summaryModal = document.getElementById('summary-modal');
+        const btnModalRestart = document.getElementById('btn-modal-restart');
+        const btnQuickReset = document.getElementById('btn-quick-reset');
+        const soundToggle = document.getElementById('sound-toggle');
+        const soundIcon = document.getElementById('sound-icon');
+        const soundLabel = document.getElementById('sound-label');
+
+        const strategyWaiting = document.getElementById('strategy-waiting');
+        const strategyActiveContent = document.getElementById('strategy-active-content');
+        const strategyAttributeTitle = document.getElementById('strategy-attribute-title');
+        const strategyNoteText = document.getElementById('strategy-note-text');
+        const strategyVisualContainer = document.getElementById('strategy-visual-container');
+        const strategyHistoryTags = document.getElementById('strategy-history-tags');
+        const progressStepText = document.getElementById('progress-step-text');
+        const viewModeToggle = document.getElementById('view-mode-toggle');
+        const btnModeKpi = document.getElementById('btn-mode-kpi');
+        const btnModeTable = document.getElementById('btn-mode-table');
+
+        function renderSingleViewKpis(dataset) {
+            if (!dataset) return;
+            strategyVisualContainer.innerHTML = '';
+            const grid = document.createElement('div');
+            grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-2.5';
+
+            const canonicalOrder = ['gfk', 'profili', 'generi', 'retail'];
+
+            canonicalOrder.forEach(key => {
+                const section = dataset[key];
+                if (!section) return;
+
+                const sortedByAffinity = [...section.items].sort((a, b) => b.affinita - a.affinita);
+                const subItems = sortedByAffinity.slice(0, 4);
+
+                const card = document.createElement('div');
+                card.className = 'bg-slate-900/90 border border-sky-900/50 hover:border-sky-500/50 p-2.5 md:p-3 rounded-2xl flex flex-col justify-between shadow-xl transition';
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between pb-1.5 border-b border-slate-800">
+                            <span class="text-xs font-black uppercase tracking-wider text-sky-300 flex items-center gap-1.5 truncate">
+                                <span class="text-sm">${section.icon}</span> ${section.title}
+                            </span>
+                            <span class="text-[9px] font-mono text-slate-400 bg-slate-800 px-1.5 py-0.5 rounded-full font-bold flex-shrink-0">
+                                ${section.items.length} segnali
+                            </span>
+                        </div>
+
+                        <div class="flex items-center justify-between text-[9px] font-bold text-slate-400 pt-1.5 pb-1 px-1">
+                            <span class="uppercase tracking-wider">Top 4 Segnali</span>
+                            <div class="flex items-center gap-1.5 font-mono">
+                                <span class="text-amber-400">Aff.</span>
+                                <span class="text-slate-600">|</span>
+                                <span class="text-cyan-300">Distr.%</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5 pt-0.5">
+                            ${subItems.map((item, idx) => `
+                                <div class="px-1.5 py-1 rounded-lg bg-slate-950/70 hover:bg-slate-950 border border-slate-800/80 hover:border-sky-500/30 transition space-y-0.5">
+                                    <div class="flex justify-between items-center text-slate-200 gap-1.5">
+                                        <span class="text-[11px] md:text-xs font-semibold truncate pr-1 text-slate-100" title="${item.label}">
+                                            <span class="text-slate-500 font-mono text-[10px] mr-1">${idx + 1}.</span>${item.label}
+                                        </span>
+                                        <div class="flex items-center gap-1 font-mono font-black text-[11px] md:text-xs flex-shrink-0">
+                                            <span class="text-amber-400 bg-amber-950/50 px-1 py-0.2 rounded border border-amber-500/30" title="Indice Affinità">
+                                                ${item.affinita.toFixed(2)}
+                                            </span>
+                                            <span class="text-slate-600">|</span>
+                                            <span class="text-cyan-300 bg-cyan-950/50 px-1 py-0.2 rounded border border-cyan-500/30 min-w-[44px] text-right" title="Distribuzione %">
+                                                ${item.dist.toFixed(1)}%
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="w-full bg-slate-900 rounded-full h-1 overflow-hidden">
+                                        <div class="bg-gradient-to-r from-amber-400 via-sky-400 to-cyan-400 h-full rounded-full" style="width: ${Math.min(Math.max(item.dist, 6), 100)}%"></div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <button class="btn-goto-detail mt-2 w-full py-1 text-[9px] uppercase font-bold text-sky-300 hover:text-white bg-slate-950 hover:bg-sky-950/80 border border-sky-900/60 hover:border-sky-500/60 rounded-lg transition text-center cursor-pointer">
+                        Vedi tutti i ${section.items.length} dettagli →
+                    </button>
+                `;
+
+                const detailBtn = card.querySelector('.btn-goto-detail');
+                if (detailBtn) {
+                    detailBtn.addEventListener('click', () => {
+                        setViewMode('table', key);
+                    });
+                }
+
+                grid.appendChild(card);
+            });
+
+            strategyVisualContainer.appendChild(grid);
+        }
+
+        function renderFullTabularDashboard(dataset, activeCategory = 'tutte') {
+            if (!dataset) return;
+            currentTabularCategory = activeCategory;
+            strategyVisualContainer.innerHTML = '';
+
+            const canonicalOrder = ['gfk', 'profili', 'generi', 'retail'].filter(k => !!dataset[k]);
+            const totalCount = canonicalOrder.reduce((acc, k) => acc + dataset[k].items.length, 0);
+
+            const tabsNav = document.createElement('div');
+            tabsNav.className = 'flex flex-wrap gap-1.5 pb-2 border-b border-sky-900/50';
+
+            const categories = [
+                { id: 'tutte', label: 'Tutte', badge: totalCount.toString() },
+                ...canonicalOrder.map(k => ({
+                    id: k,
+                    label: dataset[k].title.split(' ')[0],
+                    badge: dataset[k].items.length.toString()
+                }))
+            ];
+
+            categories.forEach(cat => {
+                const tabBtn = document.createElement('button');
+                const isActive = (cat.id === activeCategory);
+                tabBtn.className = `text-[10px] uppercase font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 cursor-pointer ${
+                    isActive 
+                        ? 'bg-sky-500 text-slate-950 font-black shadow-[0_0_12px_rgba(56,189,248,0.6)]' 
+                        : 'bg-slate-900/80 text-slate-400 hover:text-white border border-sky-900/40 hover:border-sky-500/40'
+                }`;
+                tabBtn.innerHTML = `<span>${cat.label}</span><span class="text-[9px] px-1 rounded ${isActive ? 'bg-slate-950/20 text-slate-950' : 'bg-slate-800 text-slate-300'} font-mono">${cat.badge}</span>`;
+                tabBtn.addEventListener('click', () => {
+                    renderFullTabularDashboard(dataset, cat.id);
+                });
+                tabsNav.appendChild(tabBtn);
+            });
+
+            const legendHeader = document.createElement('div');
+            legendHeader.className = 'flex items-center justify-between text-[10px] font-bold text-slate-400 px-2 py-1 bg-slate-900/90 rounded-lg border border-sky-900/30';
+            legendHeader.innerHTML = `
+                <span class="text-sky-300 uppercase tracking-wider">Dimensioni & Segnali</span>
+                <div class="flex items-center gap-3">
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-amber-400 inline-block shadow-[0_0_6px_rgba(251,191,36,0.8)]"></span> Affinità</span>
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-400 inline-block shadow-[0_0_6px_rgba(34,211,238,0.8)]"></span> Distrib. %</span>
+                </div>
+            `;
+
+            const listContainer = document.createElement('div');
+            listContainer.className = 'space-y-2.5 max-h-[310px] overflow-y-auto pr-1.5 custom-scroll';
+
+            const keysToRender = (activeCategory === 'tutte') ? canonicalOrder : [activeCategory];
+
+            keysToRender.forEach(key => {
+                const section = dataset[key];
+                if (!section) return;
+
+                const sectionBlock = document.createElement('div');
+                sectionBlock.className = 'bg-slate-900/70 border border-sky-900/40 rounded-xl p-2.5 space-y-1.5';
+
+                sectionBlock.innerHTML = `
+                    <div class="flex items-center justify-between pb-1 border-b border-slate-800 text-[10px] font-extrabold uppercase tracking-wider text-sky-300">
+                        <span>${section.icon} ${section.title}</span>
+                        <span class="text-[9px] font-mono text-slate-400">${section.items.length} items</span>
+                    </div>
+                `;
+
+                const itemsWrapper = document.createElement('div');
+                itemsWrapper.className = 'space-y-1.5 pt-0.5';
+
+                section.items.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'p-1.5 rounded-lg bg-slate-950/70 hover:bg-slate-950 border border-slate-800/80 hover:border-sky-500/30 transition flex flex-col gap-1';
+
+                    const distWidth = Math.min(Math.max(item.dist, 4), 100);
+
+                    row.innerHTML = `
+                        <div class="flex justify-between items-baseline gap-2">
+                            <span class="text-[11px] font-medium text-slate-200 leading-tight truncate" title="${item.label}">
+                                ${item.label}
+                            </span>
+                            <div class="flex items-center gap-2 flex-shrink-0 font-mono font-bold text-[11px]">
+                                <span class="text-amber-400 bg-amber-950/60 border border-amber-500/30 px-1.5 py-0.5 rounded text-[10px]" title="Indice di Affinità">
+                                    ${item.affinita.toFixed(2)}
+                                </span>
+                                <span class="text-cyan-300 bg-cyan-950/60 border border-cyan-500/30 px-1.5 py-0.5 rounded text-[10px] w-12 text-right" title="Distribuzione %">
+                                    ${item.dist.toFixed(1)}%
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden flex">
+                            <div class="h-full bg-gradient-to-r from-cyan-500 to-sky-400 rounded-full" style="width: ${distWidth}%"></div>
+                        </div>
+                    `;
+                    itemsWrapper.appendChild(row);
+                });
+
+                sectionBlock.appendChild(itemsWrapper);
+                listContainer.appendChild(sectionBlock);
+            });
+
+            strategyVisualContainer.appendChild(tabsNav);
+            strategyVisualContainer.appendChild(legendHeader);
+            strategyVisualContainer.appendChild(listContainer);
+        }
+
+        function setViewMode(mode, category = 'tutte') {
+            viewMode = mode;
+            const completedIndex = currentStepIndex > 0 ? (currentStepIndex - 1) : 0;
+            const step = STEPS[completedIndex];
+            if (!step || !step.dataset) return;
+
+            if (mode === 'kpi') {
+                btnModeKpi.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-950 bg-amber-400 font-black shadow cursor-pointer';
+                btnModeTable.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-400 hover:text-white cursor-pointer';
+                renderSingleViewKpis(step.dataset);
+            } else {
+                btnModeTable.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-950 bg-amber-400 font-black shadow cursor-pointer';
+                btnModeKpi.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-400 hover:text-white cursor-pointer';
+                renderFullTabularDashboard(step.dataset, category);
+            }
+        }
+
+        function renderStepHistogram(histogramData) {
+            viewModeToggle.classList.add('hidden');
+            strategyVisualContainer.innerHTML = '';
+
+            const histWrapper = document.createElement('div');
+            histWrapper.className = 'bg-slate-900/70 border border-sky-900/50 rounded-2xl p-4 space-y-3';
+            histWrapper.innerHTML = `
+                <div class="flex items-center justify-between text-[11px] font-bold text-sky-300 uppercase tracking-wider pb-1 border-b border-sky-900/40">
+                    <span>Composizione Segnali Dati</span>
+                    <span>Affinità %</span>
+                </div>
+            `;
+
+            const barsContainer = document.createElement('div');
+            barsContainer.className = 'space-y-2.5';
+
+            histogramData.forEach((item, index) => {
+                const barRow = document.createElement('div');
+                barRow.className = 'space-y-1';
+                barRow.innerHTML = `
+                    <div class="flex justify-between items-center text-[10px] md:text-[11px] font-semibold text-slate-300">
+                        <span class="truncate pr-2">${item.label}</span>
+                        <span class="font-mono text-sky-400 font-bold">${item.pct}%</span>
+                    </div>
+                    <div class="w-full bg-slate-950/80 rounded-full h-2 overflow-hidden border border-sky-900/60 p-0.5">
+                        <div id="bar-${index}" class="histogram-bar h-full rounded-full bg-gradient-to-r ${item.color}" style="width: 0%; transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1);"></div>
+                    </div>
+                `;
+                barsContainer.appendChild(barRow);
+
+                setTimeout(() => {
+                    const bar = document.getElementById(`bar-${index}`);
+                    if (bar) bar.style.width = `${item.pct}%`;
+                }, 80 + index * 60);
+            });
+
+            histWrapper.appendChild(barsContainer);
+            strategyVisualContainer.appendChild(histWrapper);
+        }
+
+        function resetSlots() {
+            for (let i = 0; i < 5; i++) {
+                const slot = document.getElementById(`slot-${i}`);
+                const content = document.getElementById(`slot-content-${i}`);
+                if (slot && content) {
+                    slot.className = 'tv-box-shape tv-slot-hidden w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center';
+                    content.innerHTML = '<div class="shimmer-placeholder"></div>';
+                }
+            }
+        }
+
+        function refreshStepUI() {
+            if (currentStepIndex >= STEPS.length) {
+                choicesContainer.classList.add('hidden');
+                finalRevealContainer.classList.remove('hidden');
+                return;
+            }
+
+            choicesContainer.classList.remove('hidden');
+            finalRevealContainer.classList.add('hidden');
+
+            const step = STEPS[currentStepIndex];
+            textLeft.textContent = step.leftWord;
+            btnLeft.setAttribute('data-word', step.leftWord);
+            textRight.textContent = step.rightWord;
+            btnRight.setAttribute('data-word', step.rightWord);
+
+            btnLeft.disabled = false;
+            btnRight.disabled = false;
+            isProcessing = false;
+        }
+
+        function animateAudience(start, end, duration = 750) {
+            const startTime = performance.now();
+            function update(time) {
+                const elapsed = time - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const ease = 1 - Math.pow(1 - progress, 3);
+                const current = start + (end - start) * ease;
+                
+                audienceCounter.textContent = (current % 1 === 0) ? current.toFixed(0) : current.toFixed(1);
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    audienceCounter.textContent = (end % 1 === 0) ? end.toFixed(0) : end.toFixed(1);
+                    currentAudienceNumber = end;
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        function triggerFlash(type) {
+            flashEffect.className = `fixed inset-0 pointer-events-none z-50 transition-opacity duration-250 opacity-100 ${
+                type === 'correct' ? 'bg-sky-500/20' : 'bg-red-600/25'
+            }`;
+            setTimeout(() => {
+                flashEffect.className = 'fixed inset-0 pointer-events-none z-50 transition-opacity duration-300 opacity-0';
+            }, 250);
+        }
+
+        function handleSelection(selectedWord, clickedBtn) {
+            if (isProcessing) return;
+            if (currentStepIndex >= STEPS.length) return;
+
+            isProcessing = true;
+            btnLeft.disabled = true;
+            btnRight.disabled = true;
+
+            const step = STEPS[currentStepIndex];
+            const isCorrect = (selectedWord && selectedWord.trim().toUpperCase() === step.correct.trim().toUpperCase());
+
+            const slot = document.getElementById(`slot-${currentStepIndex}`);
+            const content = document.getElementById(`slot-content-${currentStepIndex}`);
+
+            if (isCorrect) {
+                sound.playCorrect();
+                triggerFlash('correct');
+                if (clickedBtn) clickedBtn.classList.add('ring-4', 'ring-emerald-400');
+            } else {
+                sound.playWrong();
+                triggerFlash('wrong');
+                gameStage.classList.add('shake-effect');
+                setTimeout(() => gameStage.classList.remove('shake-effect'), 400);
+                if (clickedBtn) clickedBtn.classList.add('ring-4', 'ring-red-500');
+            }
+
+            if (slot && content) {
+                slot.className = 'tv-box-shape tv-slot-revealed-blue w-full max-w-[500px] h-13 md:h-14 flex items-center justify-center';
+                content.innerHTML = `
+                    <span class="font-black text-lg md:text-xl text-white tracking-wider uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.85)]">
+                        ${step.correct}
+                    </span>
+                `;
+            }
+
+            const prevAudience = currentAudienceNumber;
+            animateAudience(prevAudience, step.targetAudience, 750);
+
+            affinityCounter.textContent = step.targetAffinity;
+            affinityBadge.classList.add('boosted');
+            setTimeout(() => affinityBadge.classList.remove('boosted'), 700);
+
+            revealedWords.push(step.correct);
+            renderHistoryTags();
+
+            strategyWaiting.classList.add('hidden');
+            strategyActiveContent.classList.remove('hidden');
+
+            strategyAttributeTitle.textContent = step.correct;
+            strategyNoteText.textContent = step.note;
+            progressStepText.textContent = `Step ${currentStepIndex + 1} di 5`;
+
+            if (step.dataset) {
+                viewModeToggle.classList.remove('hidden');
+                viewModeToggle.classList.add('flex');
+                viewMode = 'kpi';
+                btnModeKpi.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-950 bg-amber-400 font-black shadow cursor-pointer';
+                btnModeTable.className = 'text-[10px] font-bold px-2.5 py-1 rounded-lg transition text-slate-400 hover:text-white cursor-pointer';
+                renderSingleViewKpis(step.dataset);
+            } else if (step.histogram) {
+                renderStepHistogram(step.histogram);
+            }
+
+            setTimeout(() => {
+                if (clickedBtn) {
+                    clickedBtn.classList.remove('ring-4', 'ring-emerald-400', 'ring-red-500');
+                }
+                currentStepIndex++;
+                refreshStepUI();
+            }, 1000);
+        }
+
+        function renderHistoryTags() {
+            strategyHistoryTags.innerHTML = '';
+            revealedWords.forEach(w => {
+                const tag = document.createElement('span');
+                tag.className = 'bg-blue-600/30 border border-sky-400/40 text-sky-200 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase';
+                tag.textContent = w;
+                strategyHistoryTags.appendChild(tag);
+            });
+        }
+
+        function presentSummary() {
+            sound.playVictory();
+            summaryModal.classList.remove('hidden');
+        }
+
+        function restartFromBeginning() {
+            sound.playRestart();
+            currentStepIndex = 0;
+            isProcessing = false;
+            currentAudienceNumber = 20.0;
+            revealedWords = [];
+            viewMode = 'kpi';
+            currentTabularCategory = 'tutte';
+
+            audienceCounter.textContent = '20';
+            affinityCounter.textContent = '1.0x';
+
+            summaryModal.classList.add('hidden');
+
+            strategyWaiting.classList.remove('hidden');
+            strategyActiveContent.classList.add('hidden');
+            strategyVisualContainer.innerHTML = '';
+            viewModeToggle.classList.add('hidden');
+
+            resetSlots();
+            renderHistoryTags();
+            refreshStepUI();
+        }
+
+        btnLeft.addEventListener('click', (e) => {
+            e.preventDefault();
+            sound.init();
+            const word = btnLeft.getAttribute('data-word');
+            handleSelection(word, btnLeft);
+        });
+
+        btnRight.addEventListener('click', (e) => {
+            e.preventDefault();
+            sound.init();
+            const word = btnRight.getAttribute('data-word');
+            handleSelection(word, btnRight);
+        });
+
+        btnRevealTarget.addEventListener('click', (e) => {
+            e.preventDefault();
+            presentSummary();
+        });
+
+        btnQuickReset.addEventListener('click', (e) => {
+            e.preventDefault();
+            restartFromBeginning();
+        });
+
+        btnModalRestart.addEventListener('click', (e) => {
+            e.preventDefault();
+            restartFromBeginning();
+        });
+
+        btnModeKpi.addEventListener('click', () => setViewMode('kpi'));
+        btnModeTable.addEventListener('click', () => setViewMode('table', 'tutte'));
+
+        soundToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            const on = sound.toggle();
+            soundIcon.textContent = on ? '🔊' : '🔇';
+            soundLabel.textContent = on ? 'Audio On' : 'Audio Off';
+        });
+
+        window.addEventListener('load', () => {
+            resetSlots();
+            renderHistoryTags();
+            refreshStepUI();
+        });
+    </script>
+</body>
+</html>
